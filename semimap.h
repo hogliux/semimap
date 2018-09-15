@@ -66,6 +66,7 @@
 */
 
 #include <cstring>
+#include <map>
 #include <memory>
 #include <new>
 #include <type_traits>
@@ -306,7 +307,7 @@ public:
     }
 
 private:
-    using staticmap = static_map<Key, std::unordered_map<map<Key, Value>*, Value>, Tag>;
+    using staticmap = static_map<Key, std::map<map<Key, Value>*, Value>, Tag>;
 };
 
 #undef semi_branch_expect
