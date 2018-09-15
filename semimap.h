@@ -74,7 +74,7 @@
 
 // check C++ version
 #if (defined(_MSVC_LANG) && _MSVC_LANG < 201703L) || ((!defined(_MSVC_LANG)) && __cplusplus < 201703L)
-#error "semi::map and semi::static_map require C++17 support"
+#error semi::map and semi::static_map require C++17 support
 #endif
 
 // some versions of clang do not seem to have std::launder
