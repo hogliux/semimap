@@ -72,12 +72,23 @@
 #include <unordered_map>
 #include <utility>
 
+// check C++ version
+#if (defined(_MSVC_LANG) && _MSVC_LANG < 201703L) || ((!defined(_MSVC_LANG)) && __cplusplus < 201703L)
+#error "semi::map and semi::static_map require C++17 support"
+#endif
+
 // some versions of clang do not seem to have std::launder
 #if __cpp_lib_launder < 201606
 namespace std {
 template <class T>
 constexpr T* launder(T* p) noexcept { return p; }
 }
+#endif
+
+#ifdef __GNUC__
+#define semi_branch_expect(x, y) __builtin_expect(x, y)
+#else
+#define semi_branch_expect(x, y) x
 #endif
 
 namespace semi {
@@ -138,7 +149,7 @@ public:
         auto* mem = storage<UniqueTypeForKeyValue>;
         auto& i_flag = init_flag<UniqueTypeForKeyValue>;
 
-        if (!__builtin_expect(i_flag, true)) {
+        if (!semi_branch_expect(i_flag, true)) {
             Key key(identifier());
 
             auto it = runtime_map.find(key);
@@ -170,7 +181,7 @@ public:
     {
         using UniqueTypeForKeyValue = decltype(detail::idval2type(identifier));
 
-        if (!__builtin_expect(init_flag<UniqueTypeForKeyValue>, true)) {
+        if (!semi_branch_expect(init_flag<UniqueTypeForKeyValue>, true)) {
             auto key = identifier();
             return contains(key);
         }
@@ -297,5 +308,7 @@ public:
 private:
     using staticmap = static_map<Key, std::unordered_map<map<Key, Value>*, Value>, Tag>;
 };
+
+#undef semi_branch_expect
 
 } // namespace semi
