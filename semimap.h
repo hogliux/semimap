@@ -78,14 +78,6 @@
 #error semi::map and semi::static_map require C++17 support
 #endif
 
-// some versions of clang do not seem to have std::launder
-#if __cpp_lib_launder < 201606
-namespace std {
-template <class T>
-constexpr T* launder(T* p) noexcept { return p; }
-}
-#endif
-
 #ifdef __GNUC__
 #define semi_branch_expect(x, y) __builtin_expect(x, y)
 #else
@@ -128,6 +120,23 @@ namespace detail {
     template <typename, typename, bool>
     struct default_tag {
     };
+
+    //==============================================================================
+    // some versions of clang do not seem to have std::launder
+#if __cpp_lib_launder >= 201606
+    template <class T>
+    constexpr T* launder(T* p)
+    {
+        return std::launder(p);
+    }
+#else
+    template <class T>
+    constexpr T* launder(T* p)
+    {
+        return p;
+    }
+#endif
+
 } // namespace detail
 
 // forward declaration
@@ -163,7 +172,7 @@ public:
             i_flag = true;
         }
 
-        return *std::launder(reinterpret_cast<Value*>(mem));
+        return *detail::launder(reinterpret_cast<Value*>(mem));
     }
 
     template <typename... Args>
