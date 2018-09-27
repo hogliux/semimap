@@ -24,8 +24,8 @@
   SOFTWARE.
   ==============================================================================
 
-  This associative map container avoids any hasing overhead when the key is
-  a literal. It can also fallback to run-time lookup for non-literal keys.
+  This associative map container avoids any having overhead when the key is
+  a literal. It can also fall back to run-time lookup for non-literal keys.
 
   You use it as follows:
 
@@ -53,7 +53,7 @@
       std::cin >> key;
       std::cout << map.get(key) << std::endl; // for example: outputs "soda" if key is "drink"
 
-      // there is also a static version of the map where lookeup is even faster
+      // there is also a static version of the map where lookup is even faster
       struct Tag {};
       using Map = semi::static_map<std::string, std::string, Tag>;
 
