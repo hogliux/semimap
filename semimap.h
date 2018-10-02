@@ -66,12 +66,12 @@
 */
 
 #include <cstring>
-#include <map>
 #include <memory>
 #include <new>
 #include <type_traits>
 #include <unordered_map>
 #include <utility>
+#include <vector>
 
 // check C++ version
 #if (defined(_MSVC_LANG) && _MSVC_LANG < 201703L) || ((!defined(_MSVC_LANG)) && __cplusplus < 201703L)
@@ -119,6 +119,49 @@ namespace detail {
 
     template <typename, typename, bool>
     struct default_tag {
+    };
+
+    //==============================================================================
+    // super simple flat map implementation
+    template <typename Key, typename Value>
+    class flat_map {
+    public:
+        template <typename... Args>
+        Value& get(const Key& key, Args&&... args)
+        {
+            for (auto& pair : storage)
+                if (pair.first == key)
+                    return pair.second;
+
+            return storage.emplace_back(key, Value(std::forward<Args>(args)...)).second;
+        }
+
+        auto size() const
+        {
+            return storage.size();
+        }
+
+        void erase(const Key& key)
+        {
+            for (auto it = storage.begin(); it != storage.end(); ++it) {
+                if (it->first == key) {
+                    storage.erase(it);
+                    return;
+                }
+            }
+        }
+
+        bool contains(const Key& key) const
+        {
+            for (auto& pair : storage)
+                if (pair.first == key)
+                    return true;
+
+            return false;
+        }
+
+    private:
+        std::vector<std::pair<Key, Value>> storage;
     };
 
     //==============================================================================
@@ -271,16 +314,14 @@ public:
     template <typename Identifier, typename... Args>
     Value& get(Identifier key, Args&... args)
     {
-        return staticmap::get(key).try_emplace(this, std::forward<Args>(args)...).first->second;
+        return staticmap::get(key).get(this, std::forward<Args>(args)...);
     }
 
     template <typename Identifier>
     bool contains(Identifier key)
     {
-        if (staticmap::contains(key)) {
-            auto& map = staticmap::get(key);
-            return (map.find(this) != map.end());
-        }
+        if (staticmap::contains(key))
+            return staticmap::get(key).contains(this);
 
         return false;
     }
@@ -316,7 +357,7 @@ public:
     }
 
 private:
-    using staticmap = static_map<Key, std::map<map<Key, Value>*, Value>, Tag>;
+    using staticmap = static_map<Key, detail::flat_map<map<Key, Value>*, Value>, Tag>;
 };
 
 #undef semi_branch_expect
