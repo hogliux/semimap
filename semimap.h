@@ -65,7 +65,11 @@
   }
 
   See my cppcon talk about this container here:
-  https://www.youtube.com/watch?v=qNAbGpV1ZkU
+
+  Slides: https://goo.gl/igwVxD
+  Video:  https://www.youtube.com/watch?v=qNAbGpV1ZkU
+
+  Twitter: @hogliux
 */
 
 #include <cstring>
