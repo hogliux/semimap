@@ -1,6 +1,9 @@
 semi::static_map and semi::map
 ==============================
 
+This container was the topic of a cppcon talk: https://www.youtube.com/watch?v=qNAbGpV1ZkU (slides: https://goo.gl/igwVxD )
+
+
 associative map containers with compile-time lookup!
 ----------------------------------------------------
 
@@ -75,8 +78,6 @@ void foo()
 As this ensures that even if the same `struct` name "Tag" is used in another block, the `semi::static_map`s will not share their contents.
 
 Also note, that as a static type, the contents of the `semi::static_map` will only be deleted when the program is exited. If you need to delete your key/values sooner then use the `clear` method.
-
-This container will be the topic of a cppcon talk: https://www.youtube.com/watch?v=qNAbGpV1ZkU (slides: https://goo.gl/igwVxD )
 
 -Fabian
 
