@@ -1,7 +1,11 @@
 semi::static_map and semi::map
 ==============================
 
-This container was the topic of a cppcon talk: https://www.youtube.com/watch?v=qNAbGpV1ZkU (slides: https://goo.gl/igwVxD )
+This container was the topic of a cppcon talk:
+
+https://www.youtube.com/watch?v=qNAbGpV1ZkU
+
+(slides: https://goo.gl/igwVxD )
 
 
 associative map containers with compile-time lookup!
