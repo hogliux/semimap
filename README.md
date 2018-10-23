@@ -8,11 +8,6 @@ Normally, associative containers require some runtime overhead when looking up t
 
 In fact, when using `semi::static_map` and looking up a value with C++ literal as a key, then the value lookup is nearly as efficient as looking up a global variable. As long as you use C++ literals as your keys, the computational time of the lookup will stay constant and, for example, will not increase with the number of keys in your container!
 
-See my cppcon talk about this container here:
-
-Slides: https://goo.gl/igwVxD
-Video:  https://www.youtube.com/watch?v=qNAbGpV1ZkU
-
 ```c++
 #include <iostream>
 #include <string>
@@ -81,7 +76,8 @@ As this ensures that even if the same `struct` name "Tag" is used in another blo
 
 Also note, that as a static type, the contents of the `semi::static_map` will only be deleted when the program is exited. If you need to delete your key/values sooner then use the `clear` method.
 
-This container will be the topic of a cppcon talk: http://sched.co/FnL5
+This container will be the topic of a cppcon talk: https://www.youtube.com/watch?v=qNAbGpV1ZkU (slides: https://goo.gl/igwVxD )
 
 -Fabian
+
 @hogliux
