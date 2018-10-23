@@ -8,6 +8,8 @@ Normally, associative containers require some runtime overhead when looking up t
 
 In fact, when using `semi::static_map` and looking up a value with C++ literal as a key, then the value lookup is nearly as efficient as looking up a global variable. As long as you use C++ literals as your keys, the computational time of the lookup will stay constant and, for example, will not increase with the number of keys in your container!
 
+See my cppcon talk about this container here: https://www.youtube.com/watch?v=qNAbGpV1ZkU
+
 ```c++
 #include <iostream>
 #include <string>
