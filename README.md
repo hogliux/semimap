@@ -13,7 +13,7 @@ associative map containers with compile-time lookup!
 
 Normally, associative containers require some runtime overhead when looking up their values from a key. However, when the key is known at compile-time (for example, when the key is a literal) then this run-time lookup could technically be avoided. This is exactly what the goal of `semi::static_map` and `semi::map` is.
 
-In fact, when using `semi::static_map` and looking up a value with C++ literal as a key, then the value lookup is nearly as efficient as looking up a global variable. As long as you use C++ literals as your keys, the computational time of the lookup will stay constant and, for example, will not increase with the number of keys in your container. In fact, if you've accessed the value before, then on x86/arm it will reduce to only three machine instructions: a cmp, jne and a direct load!
+In fact, when using `semi::static_map` and looking up a value with C++ literal as a key, then the value lookup is nearly as efficient as looking up a global variable (on x86/arm it will reduce to only three machine instructions: a cmp, jne and a direct load). As long as you use C++ literals as your keys, the computational time of the lookup will stay constant and, for example, will not increase with the number of keys in your container!
 
 ```c++
 #include <iostream>
