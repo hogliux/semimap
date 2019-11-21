@@ -41,7 +41,7 @@ int main()
   std::cin >> key;
   std::cout << map.get(key) << std::endl; // for example: outputs "soda" if key is "drink"
 
-  // there is also a static version of the map where lookeup is even faster
+  // there is also a static version of the map where look up is even faster
   struct Tag {};
   using Map = semi::static_map<std::string, std::string, Tag>;
 
