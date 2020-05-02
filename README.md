@@ -53,7 +53,7 @@ int main()
 }
 ```
 
-The containers are very simple and only have the methods `get`, `erase`, `contains` and `clear`. `get` can also take any number of extra optoinal parameters which will be passed to your value's constructor if the value is not already in the container. As such, `get` is very similar to `std::map`'s `try_emplace`. For example:
+The containers are very simple and only have the methods `get`, `erase`, `contains` and `clear`. `get` can also take any number of extra optional parameters which will be passed to your value's constructor if the value is not already in the container. As such, `get` is very similar to `std::map`'s `try_emplace`. For example:
 
 ```c++
 #define ID(x) []() constexpr { return x; }
