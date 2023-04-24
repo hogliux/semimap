@@ -198,6 +198,7 @@ class map;
 template <typename Key, typename Value, typename Tag = detail::default_tag<Key, Value, true>>
 class static_map {
 public:
+    using KeyType = Key;
     static_map() = delete;
 
     template <typename Identifier, typename... Args, std::enable_if_t<std::is_invocable_v<Identifier>, int> = 0>
@@ -205,7 +206,6 @@ public:
     {
         static_assert(std::is_convertible_v<detail::identifier_type<Identifier>, Key>);
         using UniqueTypeForKeyValue = decltype(detail::idval2type(identifier));
-
         auto* mem = storage<UniqueTypeForKeyValue>;
         auto& i_flag = init_flag<UniqueTypeForKeyValue>;
 
@@ -270,6 +270,14 @@ public:
         runtime_map.clear();
     }
 
+    static auto begin() {
+        return runtime_map.begin();
+    }
+
+    static auto end() {
+        return runtime_map.end();
+    }
+
 private:
     struct value_deleter {
         bool* i_flag = nullptr;
@@ -296,6 +304,7 @@ private:
     static bool init_flag;
     static std::unordered_map<Key, std::unique_ptr<Value, value_deleter>> runtime_map;
 };
+
 
 template <typename Key, typename Value, typename Tag>
 std::unordered_map<Key, typename static_map<Key, Value, Tag>::u_ptr> static_map<Key, Value, Tag>::runtime_map;
@@ -343,6 +352,14 @@ public:
             if (map.size() == 0)
                 staticmap::erase(key);
         }
+    }
+
+     auto begin() {
+        return staticmap::runtime_map.begin();
+    }
+
+    auto end() {
+        return staticmap::runtime_map.end();
     }
 
     void clear()
