@@ -5,7 +5,10 @@ project (semimap VERSION 1.0.0)
 
 set(SEMIMAP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-set(CMAKE_CXX_FLAGS_RELEASE -Ofast -march=native)
+# By default, we build in Release mode.
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
+endif()
 
 # Build
 # =====
