@@ -72,6 +72,10 @@
   Twitter: @hogliux
 */
 
+#define SEMIMAP_VERSION_MAJOR 1
+#define SEMIMAP_VERSION_MINOR 0
+#define SEMIMAP_VERSION_PATCH 0
+
 #include <cstring>
 #include <memory>
 #include <new>
