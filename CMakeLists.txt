@@ -12,7 +12,7 @@ set(CMAKE_CXX_FLAGS_RELEASE -Ofast -march=native)
 
 set(
     SEMIMAP_HEADERS
-    ${SEMIMAP_INCLUDE_DIR}/semimap.h
+    ${SEMIMAP_INCLUDE_DIR}/semimap/semimap.h
 )
 
 add_library(semimap INTERFACE)
