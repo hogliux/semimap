@@ -1,7 +1,6 @@
 cmake_minimum_required (VERSION 3.16)
 
-# TODO: Should we instead parse the version from the header file?
-project (semimap VERSION 1.0.0)
+project (semimap)
 
 set(SEMIMAP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
@@ -9,6 +8,28 @@ set(SEMIMAP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
 endif()
+
+# Versioning
+# ==========
+
+file(
+    STRINGS "${SEMIMAP_INCLUDE_DIR}/semimap/semimap.h" semimap_version_defines
+    REGEX "#define SEMIMAP_VERSION_(MAJOR|MINOR|PATCH)"
+)
+
+foreach(ver ${semimap_version_defines})
+    if(ver MATCHES "#define SEMIMAP_VERSION_(MAJOR|MINOR|PATCH) +([^ ]+)$")
+        set(SEMIMAP_VERSION_${CMAKE_MATCH_1} "${CMAKE_MATCH_2}" CACHE INTERNAL "")
+    endif()
+endforeach()
+
+set(
+    ${PROJECT_NAME}_VERSION
+    ${SEMIMAP_VERSION_MAJOR}.${SEMIMAP_VERSION_MINOR}.${SEMIMAP_VERSION_PATCH}
+)
+
+message(STATUS "semimap v${${PROJECT_NAME}_VERSION}")
+
 
 # Build
 # =====
@@ -73,7 +94,7 @@ unset(CMAKE_SIZEOF_VOID_P)
 
 write_basic_package_version_file(
     ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
-    VERSION ${PROJECT_VERSION}
+    VERSION ${${PROJECT_NAME}_VERSION}
     COMPATIBILITY AnyNewerVersion
     ARCH_INDEPENDENT
 )
