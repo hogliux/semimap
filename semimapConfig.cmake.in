@@ -2,9 +2,8 @@
 #
 # This module defines the following variables in your project::
 #
-#  SEMIMAP_FOUND - set to true if semimap is found
-#  SEMIMAP_INCLUDE_DIRS - include directories for semimap
-#  SEMIMAP_LIBRARY - empty
+#  semimap_FOUND - set to true if semimap is found
+#  semimap_INCLUDE_DIRS - include directories for semimap
 
 @PACKAGE_INIT@
 
